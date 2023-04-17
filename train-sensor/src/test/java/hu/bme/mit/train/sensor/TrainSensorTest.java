@@ -24,28 +24,33 @@ public class TrainSensorTest {
 
     
     @Test
-    public void AlertSpeedLimitIsAbove500() {    
+    public void AlertSpeedLimitIsAbove500() {
+        when(controller.getReferenceSpeed()).thenReturn(100);    
         sensor.overrideSpeedLimit(501);
-        when(user.getAlarmState()).thenReturn(true);
+        verify(user,times(1)).setAlarmState(true);
+
     }
 
     
     @Test
     public void AlertSpeedLimitIsBelow0() {
+        when(controller.getReferenceSpeed()).thenReturn(100);
         sensor.overrideSpeedLimit(200);
-        when(user.getAlarmState()).thenReturn(false);
+        verify(user,times(1)).setAlarmState(false);
     }
 
     @Test
     public void DifferencetIsLargerThan50Percent() {
+        when(controller.getReferenceSpeed()).thenReturn(100);
         sensor.overrideSpeedLimit((int)0.2*controller.getReferenceSpeed());
-        when(user.getAlarmState()).thenReturn(true);
+        verify(user,times(1)).setAlarmState(true);
     }
 
     @Test
     public void DifferenceLimitIsSmallerThan50Percent() {
+        when(controller.getReferenceSpeed()).thenReturn(100);
         sensor.overrideSpeedLimit((int)0.8*controller.getReferenceSpeed());
-        when(user.getAlarmState()).thenReturn(false);
+        verify(user,times(1)).setAlarmState(false);
     }
 
     /* 
